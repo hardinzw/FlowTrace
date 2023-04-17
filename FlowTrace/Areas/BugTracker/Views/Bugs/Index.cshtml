@@ -6,10 +6,22 @@
 }
 
 <div class="container">
+
+    <div class="form" asp-action="Index">
+        <input type="text" class="form-control form-input" placeholder="Search anything...">
+        <i class="fa fa-search"></i>
+    </div>
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#createBug" onclick="createBug()">
+        <i class="fa-sharp fa-solid fa-plus" style="color: white;"></i>
+    </button>
+
     <a href="" role="button"><span class="glyphicon glyphicon-plus alert-success"></span></a>
-    <table class="table table-hover">
+    <table class="table table-hover" id="bugTable">
         <thead>
             <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Summary)
                 </th>
@@ -36,6 +48,9 @@
             {
                 <tr>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Summary)
                     </td>
                     <td>
@@ -54,12 +69,24 @@
                         @Html.DisplayFor(modelItem => item.Type)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info" style="color: #c4d204;"></i></a>
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-sharp fa-solid fa-pencil" style="color: #1d5ac3;"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-sharp fa-solid fa-trash-can" style="color: #b31200;"></i></a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+<script>
+    function createBug() {
+        $.ajax({
+            type: "GET",
+            url: "/BugTracker/Bugs/Create",
+            success: function (result) {
+                $("#bugTable").html(result);
+                $("#createBug").modal('show');
+            }
+        });
+    }
+</script>

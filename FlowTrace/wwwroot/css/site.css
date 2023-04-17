@@ -21,7 +21,7 @@ body {
   margin-bottom: 60px;
 }
 
-/*Login/Register Tabs*/
+/*Login and Register Tabs*/
 .login-logout-card .card-header {
     padding: 0px 0px 12px 0px;
 }
@@ -51,3 +51,35 @@ body {
     margin-top: -1px;
     margin-right: 7px;
 }
+
+/*BugTracker Search Bar*/
+.form {
+    position: relative;
+    width: 20%;
+}
+
+    .form .fa-search {
+        position: absolute;
+        top: 13px;
+        left: 20px;
+        color: #9ca3af;
+    }
+
+    .form span {
+        position: absolute;
+        right: 17px;
+        top: 13px;
+        padding: 2px;
+        border-left: 1px solid #d1d5db;
+    }
+
+.form-input {
+    height: 40px;
+    text-indent: 33px;
+    border-radius: 10px;
+}
+
+    .form-input:focus {
+        box-shadow: none;
+        border: none;
+    }

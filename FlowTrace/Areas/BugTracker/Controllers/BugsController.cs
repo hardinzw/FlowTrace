@@ -49,7 +49,7 @@ namespace FlowTrace.Areas.BugTracker.Controllers
         // GET: BugTracker/Bugs/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView("Create");
         }
 
         // POST: BugTracker/Bugs/Create
@@ -134,7 +134,7 @@ namespace FlowTrace.Areas.BugTracker.Controllers
                 return NotFound();
             }
 
-            return View(nameof(Index));
+            return View(bug);
         }
 
         // POST: BugTracker/Bugs/Delete/5
