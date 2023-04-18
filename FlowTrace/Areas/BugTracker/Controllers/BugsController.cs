@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlowTrace.Areas.BugTracker.Data;
 using FlowTrace.Areas.BugTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FlowTrace.Areas.BugTracker.Controllers
 {
@@ -21,11 +22,12 @@ namespace FlowTrace.Areas.BugTracker.Controllers
         }
 
         // GET: BugTracker/Bugs
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return _context.Bugs != null ?
-                View(await _context.Bugs.ToListAsync()) :
-                Problem("Entity set 'BugTrackerDbContext.Bugs'  is null.");
+            View(await _context.Bugs.ToListAsync()) :
+            Problem("Entity set 'BugTrackerDbContext.Bugs'  is null.");
         }
 
         // GET: BugTracker/Bugs/Details/5
@@ -47,6 +49,7 @@ namespace FlowTrace.Areas.BugTracker.Controllers
         }
 
         // GET: BugTracker/Bugs/Create
+        [Authorize]
         public IActionResult Create()
         {
             return PartialView("Create");

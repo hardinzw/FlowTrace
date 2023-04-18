@@ -9,9 +9,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addBugLabel">Create New Bug</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <a asp-action="Index"></a>
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+                    <a asp-action="Index">
+                        <i class="fa fa-times" style="color: white;"></i>
+                    </a>
                 </button>
             </div>
             <div class="modal-body">
@@ -34,23 +35,24 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Status" class="control-label"></label>
-                        <input asp-for="Status" class="form-control" />
-                        <span asp-validation-for="Status" class="text-danger"></span>
+                        <select class="form-control" asp-for="Status">
+                            <option>Open</option>
+                            <option>In Progress</option>
+                            <option>Closed</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label asp-for="StatusCategory" class="control-label"></label>
-                        <input asp-for="StatusCategory" class="form-control" />
-                        <span asp-validation-for="StatusCategory" class="text-danger"></span>
+                        <label asp-for="StatusCategory" class="control-label">Business Impact</label>
+                        <select class="form-control" asp-for="StatusCategory">
+                            <option>Minor</option>
+                            <option>Moderate</option>
+                            <option>Critical</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label asp-for="Type" class="control-label"></label>
                         <input asp-for="Type" class="form-control" />
                         <span asp-validation-for="Type" class="text-danger"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="form-group">
-                            <input class="btn btn-primary" type="submit" value="Create" />
-                        </div>
                     </div>
                 </form>
             </div>
