@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FlowTrace.Areas.BugTracker.Data;
 using FlowTrace.Areas.BugTracker.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using FlowTrace.Areas.Identity.Data;
+using FlowTrace.Areas.BugTracker.Data;
 
 namespace FlowTrace.Areas.BugTracker.Controllers
 {
@@ -15,18 +12,28 @@ namespace FlowTrace.Areas.BugTracker.Controllers
     public class BugsController : Controller
     {
         private readonly BugTrackerDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public BugsController(BugTrackerDbContext context)
+        public BugsController(BugTrackerDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: BugTracker/Bugs
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString = "")
         {
-            return _context.Bugs != null ?
-            View(await _context.Bugs.ToListAsync()) :
+            var bugs = from b in _context.Bugs
+                       select b;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                bugs = bugs.Where(b => b.Assignee == searchString || b.Reporter == searchString || b.Status == searchString || b.StatusCategory == searchString || b.Type == searchString);
+            }
+
+            return bugs != null ?
+            View(await bugs.ToListAsync()) :
             Problem("Entity set 'BugTrackerDbContext.Bugs'  is null.");
         }
 
@@ -56,11 +63,10 @@ namespace FlowTrace.Areas.BugTracker.Controllers
         }
 
         // POST: BugTracker/Bugs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Summary,Assignee,Reporter,Status,StatusCategory,Type")] Bug bug)
+        public async Task<IActionResult> Create([Bind("Id,Summary,Assignee,Reporter,Status,StatusCategory,Type,Description")] Bug bug)
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +78,7 @@ namespace FlowTrace.Areas.BugTracker.Controllers
         }
 
         // GET: BugTracker/Bugs/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Bugs == null)
@@ -88,11 +95,10 @@ namespace FlowTrace.Areas.BugTracker.Controllers
         }
 
         // POST: BugTracker/Bugs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Summary,Assignee,Reporter,Status,StatusCategory,Type")] Bug bug)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Summary,Assignee,Reporter,Status,StatusCategory,Type,Description")] Bug bug)
         {
             if (id != bug.Id)
             {
@@ -123,6 +129,7 @@ namespace FlowTrace.Areas.BugTracker.Controllers
         }
 
         // GET: BugTracker/Bugs/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Bugs == null)
@@ -142,6 +149,7 @@ namespace FlowTrace.Areas.BugTracker.Controllers
 
         // POST: BugTracker/Bugs/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -163,5 +171,11 @@ namespace FlowTrace.Areas.BugTracker.Controllers
         {
             return (_context.Bugs?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        //private async string GetApplicationUserNames()
+        //{
+        //    var appUsers = _userManager.Users.ToListAsync();
+        //    await 
+        //}
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace FlowTrace.Areas.BugTracker.Models
+﻿using FlowTrace.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
+
+namespace FlowTrace.Areas.BugTracker.Models
 {
     public class Bug
     {
@@ -9,5 +12,6 @@
         public string Status { get; set; }
         public string StatusCategory { get; set; }
         public string Type { get; set; }
+        public string Description { get; set; }
     }
 }

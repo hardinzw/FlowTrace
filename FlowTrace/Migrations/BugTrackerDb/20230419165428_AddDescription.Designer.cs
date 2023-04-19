@@ -3,6 +3,7 @@ using FlowTrace.Areas.BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlowTrace.Migrations.BugTrackerDb
 {
     [DbContext(typeof(BugTrackerDbContext))]
-    partial class BugTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230419165428_AddDescription")]
+    partial class AddDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

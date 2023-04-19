@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlowTrace.Migrations
 {
-    [DbContext(typeof(AuthDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230405170833_InitialCreate")]
     partial class InitialCreate
     {

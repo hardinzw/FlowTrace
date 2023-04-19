@@ -1,4 +1,6 @@
 ﻿using FlowTrace.Areas.BugTracker.Models;
+using FlowTrace.Areas.Identity.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlowTrace.Areas.BugTracker.Data
@@ -9,6 +11,7 @@ namespace FlowTrace.Areas.BugTracker.Data
         {
 
         }
+
         public DbSet<Bug> Bugs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
