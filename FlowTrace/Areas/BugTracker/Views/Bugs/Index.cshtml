@@ -4,20 +4,26 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h6 style="color: lightslategray">
+    Projects / Bug Tracking
+</h6>
+<row style="display:flex; justify-content:space-between">
+    <h3>
+        Issues
+    </h3>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createBug" onclick="createBug()">
+        Export
+    </button>
+</row>
+<br />
 
-<div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
-</div>
 <form asp-asp-controller="Bugs" asp-action="Index">
     <div class="form">
-        <input type="text" name="searchString" class="form-control form-input" placeholder="Search..."><i class="fa fa-search"></i>
+        <input type="text" name="searchString" class="form-control form-input" placeholder="Search Issues" style="font-size: 13px"><i class="fa fa-search"></i>
     </div>
 </form>
 <br />
+
 <div class="container" style="background-color: white">
     <a href="" role="button"><span class="glyphicon glyphicon-plus alert-success"></span></a>
     <div id="bugDashboard">
@@ -40,14 +46,14 @@
                         @Html.DisplayNameFor(model => model.Status)
                     </th>
                     <th>
-                        <label for="StatusCategory" class="control-label">Business Impact</label>
+                        <label for="StatusCategory" class="control-label">Impact</label>
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Type)
                     </th>
                     <th>
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createBug" onclick="createBug()">
-                            <i class="fa-sharp fa-solid fa-plus" style="color: white;"></i>
+                            <i class="fa-sharp fa-solid fa-plus" style="color: white;"></i> Create
                         </button>
                     </th>
                 </tr>
@@ -56,30 +62,30 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td style="font-weight: bold; font-size: 13px; color: lightslategray;">
                             FT-@Html.DisplayFor(modelItem => item.Id)
                         </td>
-                        <td>
+                        <td style="font-weight: bold; font-size: 15px; color: cornflowerblue;">
                             @Html.DisplayFor(modelItem => item.Summary)
                         </td>
-                        <td>
+                        <td style="font-weight: bold; font-size: 13px; color: lightslategray;">
                             @Html.DisplayFor(modelItem => item.Assignee)
                         </td>
-                        <td>
+                        <td style="font-weight: bold; font-size: 13px; color: lightslategray;">
                             @Html.DisplayFor(modelItem => item.Reporter)
                         </td>
-                        <td>
+                        <td style="font-weight: bold; font-size: 13px; color: lightslategray;">
                             @Html.DisplayFor(modelItem => item.Status)
                         </td>
-                        <td>
+                        <td style="font-weight: bold; font-size: 13px; color: lightslategray;">
                             @Html.DisplayFor(modelItem => item.StatusCategory)
                         </td>
-                        <td>
+                        <td style="font-weight: bold; font-size: 13px; color: lightslategray;">
                             @Html.DisplayFor(modelItem => item.Type)
                         </td>
                         <td>
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="@("#bugDetails-" + item.Id)" data-url="@Url.Action($"/BugTracker/Details/{item.Id}")">
-                                <i class="fa-sharp fa-solid fa-circle-info" style="color: white;"></i>
+                                <i class="fa-sharp fa-solid fa-circle-info" style="color: white"></i>
                             </button>
                             @await Html.PartialAsync("Details", item)
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@("#editBug-" + item.Id)" data-url="@Url.Action($"/BugTracker/Edit/{item.Id}")">

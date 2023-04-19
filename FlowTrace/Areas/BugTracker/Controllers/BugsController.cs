@@ -29,7 +29,7 @@ namespace FlowTrace.Areas.BugTracker.Controllers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                bugs = bugs.Where(b => b.Assignee == searchString || b.Reporter == searchString || b.Status == searchString || b.StatusCategory == searchString || b.Type == searchString);
+                bugs = bugs.Where(b => b.Summary == searchString || b.Assignee == searchString || b.Reporter == searchString || b.Status == searchString || b.StatusCategory == searchString || b.Type == searchString);
             }
 
             return bugs != null ?
